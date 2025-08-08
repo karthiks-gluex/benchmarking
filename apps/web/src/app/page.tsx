@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     "provider quote comparison",
     "best aggregator speed",
   ],
+  openGraph: {
+    images: [
+      "https://raw.githubusercontent.com/gluexprotocol/public_assets/refs/heads/main/og/benchmark/og.jpg",
+    ],
+  },
 };
 
 const HomePage = () => {

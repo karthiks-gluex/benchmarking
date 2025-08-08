@@ -3,7 +3,8 @@ const site = {
   description: "",
   url: "",
   keywords: [],
-  image: "",
+  image:
+    "https://raw.githubusercontent.com/gluexprotocol/public_assets/refs/heads/main/og/benchmark/og.jpg",
   socials: {
     twitter: {
       handle: "@",
