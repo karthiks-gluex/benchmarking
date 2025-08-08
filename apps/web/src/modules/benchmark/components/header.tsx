@@ -13,7 +13,7 @@ export const Header = () => {
       className="mb-8 pb-5 border-b border-border-secondary"
       role="banner"
     >
-      <div className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4">
+      <div className="flex sm:flex-row flex-col justify-between items-end gap-4">
         <Link href="/" aria-label="GlueX - Home" className="">
           <Logo
             background="transparent"
@@ -23,19 +23,24 @@ export const Header = () => {
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6" aria-label="Primary">
-          <a
-            href="#"
+        <nav
+          className="hidden md:flex items-center gap-6 uppercase"
+          aria-label="Primary"
+        >
+          <Link
+            href="https://docs.gluex.xyz/"
+            target="_blank"
             className="text-tertiary hover:text-primary text-sm transition-colors"
           >
             Docs
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="https://github.com/gluexprotocol"
+            target="_blank"
             className="text-tertiary hover:text-primary text-sm transition-colors"
           >
-            How it works
-          </a>
+            Github
+          </Link>
         </nav>
       </div>
     </motion.header>

@@ -74,6 +74,7 @@ declare interface Provider {
 
 declare interface TradeResult {
   id: string;
+  chain: number;
   tradingPair: string;
   fromToken: string;
   toToken: string;

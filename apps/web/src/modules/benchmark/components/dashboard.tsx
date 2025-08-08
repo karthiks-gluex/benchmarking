@@ -82,6 +82,8 @@ export const Dashboard = () => {
               // @ts-ignore
               tradeResults={data.tradeResults}
               providers={data.providers}
+              onRetry={refetch}
+              selectedChain={selectedChain}
             />
           ) : null}
         </motion.div>

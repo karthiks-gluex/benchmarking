@@ -7,9 +7,11 @@ import { motion } from "framer-motion";
 
 interface ProvidersGridProps {
   providers: Provider[];
+  /** Optional retry handler to show a small CTA in empty state */
+  onRetry?: () => void;
 }
 
-export const ProvidersGrid = memo<ProvidersGridProps>(({ providers }) => {
+export const ProvidersGrid = memo<ProvidersGridProps>(({ providers, onRetry }) => {
   const isEmpty = !providers || providers.length === 0;
 
   const { topWinRateId, fastestId } = useMemo(() => {
@@ -39,32 +41,32 @@ export const ProvidersGrid = memo<ProvidersGridProps>(({ providers }) => {
       className="mb-12"
     >
       <div className="bg-gradient-to-br from-gradient-verde-from to-gradient-verde-to p-2.5 rounded-xl">
-        <div
-          className={clsx(
-            "gap-2.5 grid grid-cols-6",
-            "[&>.provider-card]:col-span-6",
-            "sm:[&>.provider-card]:col-span-3",
-            "lg:[&>.provider-card]:col-span-2",
-            "sm:[&>.provider-card:last-child:nth-child(2n+1)]:col-span-6",
-            "lg:[&>.provider-card:nth-last-child(2):nth-child(3n+1)]:col-span-3",
-            "lg:[&>.provider-card:last-child:nth-child(3n+2)]:col-span-3",
-            "lg:[&>.provider-card:last-child:nth-child(3n+1)]:col-span-6"
-          )}
-        >
-          {isEmpty
-            ? Array.from({ length: 6 }).map((_, i) => (
-                <SkeletonProviderCard key={`sk-${i}`} />
-              ))
-            : providers.map((provider, index) => (
-                <ProviderCard
-                  key={provider.id}
-                  provider={provider}
-                  index={index}
-                  isTopWin={provider.id === topWinRateId}
-                  isFastest={provider.id === fastestId}
-                />
-              ))}
-        </div>
+        {isEmpty ? (
+          <EmptyProvidersState onRetry={onRetry} />
+        ) : (
+          <div
+            className={clsx(
+              "gap-2.5 grid grid-cols-6",
+              "[&>.provider-card]:col-span-6",
+              "sm:[&>.provider-card]:col-span-3",
+              "lg:[&>.provider-card]:col-span-2",
+              "sm:[&>.provider-card:last-child:nth-child(2n+1)]:col-span-6",
+              "lg:[&>.provider-card:nth-last-child(2):nth-child(3n+1)]:col-span-3",
+              "lg:[&>.provider-card:last-child:nth-child(3n+2)]:col-span-3",
+              "lg:[&>.provider-card:last-child:nth-child(3n+1)]:col-span-6"
+            )}
+          >
+            {providers.map((provider, index) => (
+              <ProviderCard
+                key={provider.id}
+                provider={provider}
+                index={index}
+                isTopWin={provider.id === topWinRateId}
+                isFastest={provider.id === fastestId}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -178,33 +180,28 @@ export const ProviderCard = memo<ProviderCardProps>(
 
 ProviderCard.displayName = "ProviderCard";
 
-const SkeletonProviderCard = () => (
-  <div className="bg-background-secondary opacity-80 rounded-xl h-full provider-card">
-    <div className="p-6 gradient-border-content h-full">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-3">
-          <div className="bg-white/10 rounded-full w-6 h-6 animate-pulse" />
-          <div className="bg-white/10 rounded w-24 h-4 animate-pulse" />
+/* --------------------------- Empty State (no data) --------------------------- */
+
+const EmptyProvidersState = ({ onRetry }: { onRetry?: () => void }) => {
+  return (
+    <div className="bg-background-secondary p-8 border border-border-secondary rounded-xl">
+      <div className="flex flex-col items-center gap-2 text-center">
+        <div className="font-semibold text-primary text-lg">
+          No provider data available
         </div>
-        <div className="bg-white/10 rounded-full w-16 h-5 animate-pulse" />
-      </div>
-
-      <div className="gap-4 grid grid-cols-2 mb-6">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i}>
-            <div className="bg-white/10 mb-1 rounded w-20 h-3 animate-pulse" />
-            <div className="bg-white/10 rounded w-24 h-5 animate-pulse" />
-            <div className="bg-white/10 mt-1 rounded w-full h-1.5 overflow-hidden">
-              <div className="bg-white/20 w-1/3 h-full" />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-between text-gray-400 text-xs">
-        <div className="bg-white/10 rounded w-24 h-4 animate-pulse" />
-        <div className="bg-white/10 rounded w-16 h-4 animate-pulse" />
+        <div className="text-secondary text-sm">
+          A new benchmark run may be in progress or data isn’t ready yet. Please
+          check again in ~10 minutes.
+        </div>
+        {onRetry && (
+          <button
+            onClick={onRetry}
+            className="inline-flex items-center bg-[color:var(--color-green-tertiary)]/20 hover:bg-[color:var(--color-green-tertiary)]/30 mt-3 px-3 py-2 rounded-md text-[color:var(--color-primary)] text-sm transition-colors"
+          >
+            Retry
+          </button>
+        )}
       </div>
     </div>
-  </div>
-);
+  );
+};

@@ -162,6 +162,7 @@ export const useBenchmarkData = (selectedChain: string) => {
           .sort((a, b) => b - a);
 
         let outputDiffPct: number | null = null;
+
         if (outputs.length > 1 && outputs[1] !== 0) {
           outputDiffPct = (outputs[0]! - outputs[1]!) / Math.abs(outputs[1]!);
         } else if (outputs.length === 1) {
@@ -170,13 +171,14 @@ export const useBenchmarkData = (selectedChain: string) => {
 
         return {
           id: `trade-${idx}`,
+          chain: Number(r.chain),
           tradingPair: r.trading_pair,
           fromToken: r.from_token,
           toToken: r.to_token,
           input_amount: r.input_amount,
           amount: r.amount_usd,
           providers: providersObj,
-          winner: r.winner, // display name like "GlueX" or "Liqdswap"
+          winner: r.winner, // display name like "GlueX
           outputDiff: outputDiffPct, // FRACTION for the UI % (can be null)
         };
       });
