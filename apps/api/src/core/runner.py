@@ -5,7 +5,7 @@ from datetime import datetime
 
 from ..core.database import get_db
 from ..data.chain import CHAIN_CONFIG
-from ..data.amount import TEST_AMOUNTS
+from ..data.amount import TRADE_AMOUNTS
 from ..models import BenchmarkRun, TradeResult, ProviderResult
 
 from ..providers.gluex import GluexProvider
@@ -372,7 +372,7 @@ def run_benchmark_single_chain(chain_id: str, benchmark_run, db_session, pairs=N
 
         exchange_rates_time = input_time + output_time
 
-        for amount in TEST_AMOUNTS:
+        for amount in TRADE_AMOUNTS:
             print(f"  Testing ${amount['usd']} trade...")
 
             # calculate proper input amount based on USD amount and token decimals

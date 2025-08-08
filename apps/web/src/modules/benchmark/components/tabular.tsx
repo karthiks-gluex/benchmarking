@@ -201,7 +201,7 @@ export const DetailedResultsTable = memo<DetailedResultsTableProps>(
             </p>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto no-scrollbar">
             <table className="bg-background-secondary rounded-xl w-full">
               <thead>
                 <tr className="font-aeonik text-tertiary text-sm whitespace-nowrap">
