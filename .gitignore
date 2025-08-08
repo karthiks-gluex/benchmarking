@@ -378,3 +378,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.npm-only-allow
+.million

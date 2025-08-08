@@ -137,7 +137,8 @@ def get_token_price_in_usd(chain_id, token_address):
                     return None, elapsed_time
 
                 # calculate decimal adjustment factor
-                decimal_adjustment = 10 ** (usd_token_decimals - token_decimals)
+                decimal_adjustment = 10 ** (usd_token_decimals -
+                                            token_decimals)
 
                 # adjust price if there's a decimal difference
                 if decimal_adjustment != 1:
@@ -412,7 +413,7 @@ def run_benchmark_single_chain(chain_id: str, benchmark_run, db_session, pairs=N
                 from_token_symbol=input_token_symbol,
                 to_token_symbol=output_token_symbol,
                 amount_usd=amount["usd"],
-                input_amount=str(token_amount)
+                input_amount=str(token_amount / 10 ** input_decimals)
             )
 
             # add to session and flush to get the ID, but don't commit yet
